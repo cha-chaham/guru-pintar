@@ -19,7 +19,7 @@ export default function Navbar() {
       className="w-full sticky top-0 bg-white dark:bg-neutral-800"
       aria-label="navbar"
     >
-      <div className="navbar bg-base-100 bg-[#F4ECDC] dark: bg-base-200 px-4 lg:px-[5rem]">
+      <div className="navbar bg-[#F4ECDC] dark:bg-base-200 px-4 lg:px-[5rem]">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">

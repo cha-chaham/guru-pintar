@@ -1,7 +1,8 @@
 export default function Button(props) {
-  const { label } = props;
+  const { label, className, ...rest } = props;
+  const buttonClass = `btn btn-neutral btn-wide ${className || ""}`;
   return (
-    <button className="btn btn-neutral btn-wide" {...props}>
+    <button className={buttonClass} {...rest}>
       {label}
     </button>
   );

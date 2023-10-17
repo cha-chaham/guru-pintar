@@ -13,7 +13,7 @@ export default function Layout({ children }) {
       data-theme={theme}
     >
       <Navbar />
-      <div className="container mx-auto grow py-4 px-8">
+      <div className="mx-auto grow">
         {children}
         <ToastContainer
           position="top-right"
