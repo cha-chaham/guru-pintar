@@ -113,22 +113,24 @@ function RadioGroup(props) {
       <label className="text-black dark:text-white tracking-wider mb-3">
         {label}
       </label>
-      {options.map((option) => (
-        <label
-          className="text-black dark:text-white tracking-wider"
-          htmlFor={option}
-          key={option}
-        >
-          <input
-            className="mr-4"
-            type="radio"
-            value={option}
-            id={option}
-            {...(register ? register(name) : {})}
-          />
-          {option}
-        </label>
-      ))}
+      <div className="flex flex-row gap-8">
+        {options.map((option) => (
+          <label
+            className="text-black dark:text-white tracking-wider"
+            htmlFor={option}
+            key={option}
+          >
+            <input
+              className="mr-4"
+              type="radio"
+              value={option}
+              id={option}
+              {...(register ? register(name) : {})}
+            />
+            {option}
+          </label>
+        ))}
+      </div>
       {error && (
         <label className="label">
           <span className="break-words text-sm font-light text-red-500">

@@ -13,6 +13,14 @@ import { useEffect } from "react";
 import { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
 import { useToken } from "@/utils/contexts/token";
 
+import Dashboard from "@/pages/dashboard";
+import DetailClass from "@/pages/kelas/detailClass";
+import RegisterClass from "@/pages/kelas/registerClass";
+import Students from "@/pages/kelas/students";
+import EditClass from "@/pages/kelas/editClass";
+import RegisterMeeting from "@/pages/kelas/registerMeeting";
+import DetailMeeting from "@/pages/kelas/detailMeeting";
+
 export default function Router() {
   const { token } = useToken();
 
@@ -40,6 +48,38 @@ export default function Router() {
     {
       path: "/register",
       element: token !== "" ? <Navigate to="/" /> : <AuthRegister />,
+    },
+    {
+      path: "/dashboard",
+      element: token === "" ? <Navigate to="/" /> : <Dashboard />,
+    },
+    {
+      path: "/register-kelas",
+      element: token === "" ? <Navigate to="/" /> : <RegisterClass />,
+    },
+    {
+      path: "/register-meeting/:idKelas",
+      element: token === "" ? <Navigate to="/" /> : <RegisterMeeting />,
+    },
+    {
+      path: "/edit-meeting/:idKelas/:idMeeting",
+      element: token === "" ? <Navigate to="/" /> : <RegisterMeeting />,
+    },
+    {
+      path: "/edit-kelas/:id",
+      element: token === "" ? <Navigate to="/" /> : <EditClass />,
+    },
+    {
+      path: "/kelas/students/:id",
+      element: token === "" ? <Navigate to="/" /> : <Students />,
+    },
+    {
+      path: "/kelas/:id",
+      element: token === "" ? <Navigate to="/" /> : <DetailClass />,
+    },
+    {
+      path: "/kelas/:idKelas/:idMeeting",
+      element: token === "" ? <Navigate to="/" /> : <DetailMeeting />,
     },
     {
       path: "*",
