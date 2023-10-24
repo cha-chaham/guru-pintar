@@ -1,14 +1,57 @@
-import { React } from "react";
-import { RiUserAddLine, RiEdit2Line, RiDeleteBin6Line } from "react-icons/ri";
+import { React, useEffect, useState } from "react";
+import {
+  RiUserAddLine,
+  RiEdit2Line,
+  RiDeleteBin6Line,
+  RiArrowLeftLine,
+} from "react-icons/ri";
 import { useNavigate, useParams } from "react-router-dom";
 
 import UserLayout from "@/components/userLayout";
-import Button from "@/components/button";
+import { Button, ButtonBack } from "@/components/button";
 import { toast } from "react-toastify";
 import { MeetingCard } from "@/components/card";
 import swal from "@/utils/apis/swal";
+import { getDetailKelas } from "@/utils/apis/kelas";
+import { getMeetinglKelas } from "@/utils/apis/meeting";
+import { Spinner } from "@/components/loading";
 
 export default function DetailClass() {
+  const navigate = useNavigate();
+  const params = useParams();
+  const [kelas, setKelas] = useState([]);
+  const [meeting, setMeeting] = useState([]);
+  const [loading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+    fetchMeeting();
+  }, []);
+
+  async function fetchMeeting() {
+    try {
+      setIsLoading(true);
+      const result = await getMeetinglKelas();
+      const filteredData = result.filter((item) => item.idKelas === params.id);
+      setMeeting(filteredData);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function fetchData() {
+    try {
+      setIsLoading(true);
+      const result = await getDetailKelas(+params.id);
+      setKelas(result);
+    } catch (error) {
+      toast.error(error.message, { autoClose: 1000, hideProgressBar: false });
+    } finally {
+      setIsLoading(false);
+    }
+  }
   const dummyMeeting = [
     {
       title: "Pertemuan ke-1",
@@ -27,8 +70,7 @@ export default function DetailClass() {
     },
     { title: "Pertemuan ke-10", description: "Tantangan Sosial Masa Kini" },
   ];
-  const navigate = useNavigate();
-  const params = useParams();
+
   return (
     <UserLayout>
       <div className="h-64 lg:h-64 xl:h-96 bg-base-100">
@@ -41,10 +83,26 @@ export default function DetailClass() {
       <div className="w-full bg-base-100 px-5 py-12 md:px-12 md:py-12 transtion ease-in duration-300">
         <div id="headerClass" className="flex flex-row justify-between">
           <div id="header-title">
-            <p className="font-bold text-3xl">
-              Ilmu Pengetahuan Sosial - Kelas IX SMP
-            </p>
-            <p className="text-xl mt-2">Senin 09.00 - 11.00</p>
+            {loading ? (
+              <div className="animate-pulse">
+                <p className="h-2 mb-8 bg-slate-700 rounded w-96"></p>
+                <p className="h-2 bg-slate-700 rounded w-64"></p>
+              </div>
+            ) : (
+              <div className="flex flex-row items-start gap-6">
+                <div>
+                  <ButtonBack />
+                </div>
+                <div className="flex flex-col">
+                  <p className="font-bold text-3xl">
+                    {kelas.kelasName} - {kelas.kelasLevel}
+                  </p>
+                  <p className="text-xl mt-2">
+                    {kelas.kelasDay}, {kelas.kelasTime}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
           <div id="header-buttonAction" className="flex items-start gap-3">
             <div
@@ -96,15 +154,28 @@ export default function DetailClass() {
           </div>
         </div>
         <div id="listMeeting" className="mt-8">
-          {dummyMeeting.map((item, index) => (
-            <MeetingCard
-              title={item.title}
-              description={item.description}
-              key={index}
-              indexClass={params.id}
-              indexMeeting={index}
-            />
-          ))}
+          {loading ? (
+            <div className="flex justify-center">
+              <Spinner />
+            </div>
+          ) : (
+            <div>
+              {meeting.length > 0 ? (
+                meeting.map((item, index) => (
+                  <MeetingCard
+                    title={item.namaMateri}
+                    description={item.kelasDate}
+                    key={index}
+                    onClick={() => navigate(`/kelas/${params.id}/${item.id}`)}
+                  />
+                ))
+              ) : (
+                <p className="font-semibold text-xl divider">
+                  Anda Belum Melakukan Pertemuan Apapun
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </UserLayout>

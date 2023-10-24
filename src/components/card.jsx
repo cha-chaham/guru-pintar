@@ -48,9 +48,8 @@ function BenefitsCard(props) {
 }
 
 function ClassCard(props) {
-  const { title, description, url, index } = props;
+  const { title, description, url, onClick } = props;
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const image = new Image();
@@ -64,43 +63,27 @@ function ClassCard(props) {
   return (
     <div
       className="card xl:card-side shadow-xl bg-base-100 cursor-pointer hover:scale-105 transition ease-in"
-      onClick={() => navigate(`/kelas/${index}`)}
+      onClick={onClick}
     >
-      <figure className="w-38 xl:w-64">
-        {loading ? (
-          <div className="animate-pulse">
-            <div className="bg-black h-38 xl:h-32"></div>
-          </div>
-        ) : (
-          <img src={url} />
-        )}
+      <figure className="w-38 xl:w-64 h-38">
+        <img src={url} className="object-cover h-38 w-full" />
       </figure>
       <div className="card-body">
-        {loading ? (
-          <div className="animate-pulse">
-            {" "}
-            <div className="h-2 bg-slate-700 rounded mb-4"></div>
-            <div className="h-2 bg-slate-700 rounded w-64"></div>
-          </div>
-        ) : (
-          <div>
-            {" "}
-            <h2 className="card-title">{title}</h2>
-            <p>{description}</p>
-          </div>
-        )}
+        <div>
+          <h2 className="card-title lg:text-3xl">{title}</h2>
+          <p className="lg:text-xl">{description}</p>
+        </div>
       </div>
     </div>
   );
 }
 
 function MeetingCard(props) {
-  const { title, description, indexClass, indexMeeting } = props;
-  const navigate = useNavigate();
+  const { title, description, onClick } = props;
   return (
     <div
-      className="w-full px-8 py-4 bg-[#F4ECDC] rounded-xl mb-4"
-      onClick={() => navigate(`/kelas/${indexClass}/${indexMeeting}`)}
+      className="w-full px-8 py-4 bg-[#F4ECDC] rounded-xl mb-4 cursor-pointer"
+      onClick={onClick}
     >
       <p className="font-bold text-2xl text-[#2C44BC]">{title}</p>
       <p className="text-md">{description}</p>

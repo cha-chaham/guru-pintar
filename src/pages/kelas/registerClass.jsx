@@ -1,15 +1,18 @@
 import { React, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { RiArrowLeftLine } from "react-icons/ri";
 
 import { createKelas } from "@/utils/apis/kelas";
 import { kelasSchema } from "@/utils/apis/kelas";
 import UserLayout from "@/components/userLayout";
 import { Input, Select } from "@/components/input";
-import Button from "@/components/button";
+import { Button, ButtonBack } from "@/components/button";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterClass() {
+  const navigate = useNavigate();
   const {
     reset,
     register,
@@ -17,27 +20,34 @@ export default function RegisterClass() {
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(kelasSchema) });
 
-  function onSubmitData() {
-    toast.success("Kelas Berhasil Ditambahkan");
-    reset();
+  async function onSubmitData(data) {
+    try {
+      await createKelas(data);
+      toast.success("Kelas Berhasil Ditambahkan");
+      reset();
+    } catch (error) {
+      toast.error(error);
+    }
   }
 
   return (
     <UserLayout>
       <div className="w-full bg-base-100 px-5 py-12 md:px-12 md:py-24 transtion ease-in duration-300">
-        <p className="font-bold text-3xl lg:text-4xl mb-4">Tambah Kelas</p>
+        <div className="flex gap-4 items-center mb-6">
+          <ButtonBack title="Registrasi Kelas" />
+        </div>
         <form onSubmit={handleSubmit(onSubmitData)}>
           <Input
             aria-label="input-class-name"
             label="Nama Pelajaran"
-            name="className"
+            name="kelasName"
             register={register}
             error={errors.className?.message}
           />
           <Input
             aria-label="input-class-level"
             label="Tingkat Kelas"
-            name="classLevel"
+            name="kelasLevel"
             register={register}
             error={errors.classLevel?.message}
           />
@@ -45,7 +55,7 @@ export default function RegisterClass() {
             <Select
               label="Jadwal Hari"
               placeholder="Pilih Hari Pelajarannya Disini"
-              name="classDay"
+              name="kelasDay"
               aria-label="input-class-day"
               register={register}
               error={errors.classDay?.message}
@@ -54,7 +64,7 @@ export default function RegisterClass() {
             <Select
               label="Jam Pelajaran"
               placeholder="Pilih Sesi Pelajarannya Disini"
-              name="classTime"
+              name="kelasTime"
               aria-label="input-class-time"
               register={register}
               error={errors.classTime?.message}

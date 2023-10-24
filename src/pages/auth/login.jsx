@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import { Input } from "@/components/input";
 import Layout from "@/components/layout";
-import Button from "@/components/button";
+import { Button } from "@/components/button";
 import { useToken } from "@/utils/contexts/token";
 import { userLogin, loginSchema } from "@/utils/apis/auth/";
 import { Link } from "react-router-dom";

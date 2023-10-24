@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@/utils/contexts/theme";
 import { useToken } from "@/utils/contexts/token";
 import { toast } from "react-toastify";
-import Button from "./button";
+import { Button } from "./button";
 import { RiLogoutBoxLine, RiDashboardFill } from "react-icons/ri";
 
 export default function Navbar() {

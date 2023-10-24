@@ -1,6 +1,6 @@
 import Layout from "@/components/layout";
 
-import Button from "@/components/button";
+import { Button } from "@/components/button";
 import CountUp from "react-countup";
 import {
   RiSchoolFill,

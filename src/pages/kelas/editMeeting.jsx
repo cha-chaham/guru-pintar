@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import UserLayout from "@/components/userLayout";
 import { Input } from "@/components/input";
-import Button from "@/components/button";
+import { Button, ButtonBack } from "@/components/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { studentSchema } from "@/utils/apis/kelas";
@@ -46,7 +46,9 @@ export default function EditMeeting() {
   return (
     <UserLayout>
       <div className="w-full bg-base-100 px-5 py-12 md:px-12 md:py-24 transtion ease-in duration-300">
-        <p className="font-bold text-3xl lg:text-4xl mb-4">Edit Pertemuan</p>
+        <div className="flex gap-4 items-center mb-6">
+          <ButtonBack title="Edit Pertemuan" />
+        </div>
         <div className="mt-12">
           <form onSubmit={handleSubmit((data) => console.log(data))}>
             <Input

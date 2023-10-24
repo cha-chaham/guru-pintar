@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { Input, RadioGroup, Select } from "@/components/input";
 import Layout from "@/components/layout";
-import Button from "@/components/button";
+import { Button } from "@/components/button";
 import { userRegister, registerSchema } from "@/utils/apis/auth/";
 import { Link } from "react-router-dom";
 

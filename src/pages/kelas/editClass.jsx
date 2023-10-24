@@ -6,7 +6,7 @@ import { createKelas } from "@/utils/apis/kelas";
 import { kelasSchema } from "@/utils/apis/kelas";
 import UserLayout from "@/components/userLayout";
 import { Input, Select } from "@/components/input";
-import Button from "@/components/button";
+import { Button, ButtonBack } from "@/components/button";
 import { toast } from "react-toastify";
 
 export default function EditClass() {
@@ -25,7 +25,9 @@ export default function EditClass() {
   return (
     <UserLayout>
       <div className="w-full bg-base-100 px-5 py-12 md:px-12 md:py-24 transtion ease-in duration-300">
-        <p className="font-bold text-3xl lg:text-4xl mb-4">Edit Kelas</p>
+        <div className="flex gap-4 items-center mb-6">
+          <ButtonBack title="Edit Kelas" />
+        </div>
         <form onSubmit={handleSubmit(onSubmitData)}>
           <Input
             aria-label="input-class-name"

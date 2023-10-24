@@ -3,7 +3,7 @@ import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 export const getKelas = async () => {
   try {
     // GANTI LINK
-    const response = await axiosWithConfig.get("/products");
+    const response = await axiosWithConfig.get("/kelas");
 
     return response.data;
   } catch (error) {
@@ -17,7 +17,7 @@ export const createKelas = async (data) => {
       ...data,
     };
     // GANTI LINK
-    const response = await axiosWithConfig.post("/products", newData);
+    const response = await axiosWithConfig.post("/kelas", newData);
 
     return response.data;
   } catch (error) {
@@ -27,12 +27,11 @@ export const createKelas = async (data) => {
 
 export const getDetailKelas = async (kelasId) => {
   try {
-    // GANTI LINK
-    const response = await axiosWithConfig.get(`/products/${id}`);
+    const response = await axiosWithConfig.get(`/kelas/${kelasId}`);
 
     return response.data;
   } catch (error) {
-    throw Error("Gagal memperbaharui kelas");
+    throw Error("Gagal mendapatkan detail kelas" + error);
   }
 };
 
@@ -50,6 +49,7 @@ export const updatelKelas = async (data) => {
     throw Error("Gagal memperbaharui kelas");
   }
 };
+
 export const deletelKelas = async (kelasId) => {
   try {
     // GANTI LINK

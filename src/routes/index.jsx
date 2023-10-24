@@ -7,8 +7,6 @@ import {
 import Home from "@/pages";
 import AuthLogin from "@/pages/auth/login";
 import AuthRegister from "@/pages/auth/register";
-import ProductsPage from "@/pages/products";
-import ProductsDetail from "@/pages/products/detail";
 import { useEffect } from "react";
 import { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
 import { useToken } from "@/utils/contexts/token";
@@ -20,6 +18,7 @@ import Students from "@/pages/kelas/students";
 import EditClass from "@/pages/kelas/editClass";
 import RegisterMeeting from "@/pages/kelas/registerMeeting";
 import DetailMeeting from "@/pages/kelas/detailMeeting";
+import EditMeeting from "@/pages/kelas/editMeeting";
 
 export default function Router() {
   const { token } = useToken();
@@ -32,14 +31,6 @@ export default function Router() {
     {
       path: "/",
       element: <Home />,
-    },
-    {
-      path: "/products",
-      element: token === "" ? <Navigate to="/" /> : <ProductsPage />,
-    },
-    {
-      path: "/products/:id",
-      element: token === "" ? <Navigate to="/" /> : <ProductsDetail />,
     },
     {
       path: "/login",
@@ -63,7 +54,7 @@ export default function Router() {
     },
     {
       path: "/edit-meeting/:idKelas/:idMeeting",
-      element: token === "" ? <Navigate to="/" /> : <RegisterMeeting />,
+      element: token === "" ? <Navigate to="/" /> : <EditMeeting />,
     },
     {
       path: "/edit-kelas/:id",
