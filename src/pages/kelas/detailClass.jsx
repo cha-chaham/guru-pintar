@@ -12,7 +12,7 @@ import { Button, ButtonBack } from "@/components/button";
 import { toast } from "react-toastify";
 import { MeetingCard } from "@/components/card";
 import swal from "@/utils/apis/swal";
-import { getDetailKelas } from "@/utils/apis/kelas";
+import { deletelKelas, getDetailKelas } from "@/utils/apis/kelas";
 import { getMeetinglKelas } from "@/utils/apis/meeting";
 import { Spinner } from "@/components/loading";
 
@@ -42,6 +42,18 @@ export default function DetailClass() {
     }
   }
 
+  async function onClickDelete(id) {
+    try {
+      await deletelKelas(id);
+      toast.success("Berhasil Menghapus Data");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
   async function fetchData() {
     try {
       setIsLoading(true);
@@ -53,24 +65,6 @@ export default function DetailClass() {
       setIsLoading(false);
     }
   }
-  const dummyMeeting = [
-    {
-      title: "Pertemuan ke-1",
-      description: "Pengantar Ilmu Pengetahuan Sosial",
-    },
-    { title: "Pertemuan ke-2", description: "Sejarah Peradaban Manusia" },
-    { title: "Pertemuan ke-3", description: "Geografi dan Peta Dunia" },
-    { title: "Pertemuan ke-4", description: "Sistem Pemerintahan" },
-    { title: "Pertemuan ke-5", description: "Ekonomi Global" },
-    { title: "Pertemuan ke-6", description: "Kebudayaan dan Warisan Budaya" },
-    { title: "Pertemuan ke-7", description: "Pendidikan Kewarganegaraan" },
-    { title: "Pertemuan ke-8", description: "Hubungan Antarbangsa" },
-    {
-      title: "Pertemuan ke-9",
-      description: "Pembangunan dan Pembangunan Berkelanjutan",
-    },
-    { title: "Pertemuan ke-10", description: "Tantangan Sosial Masa Kini" },
-  ];
 
   return (
     <UserLayout>
@@ -125,15 +119,7 @@ export default function DetailClass() {
                   .fire({ title: "Apakah Anda Yakin ?", icon: "warning" })
                   .then((result) => {
                     if (result.isConfirmed) {
-                      swal.fire({
-                        title: "Berhasil Dihapus",
-                        icon: "success",
-                        showConfirmButton: false,
-                        cancelButtonText: "Close",
-                      });
-                      setTimeout(() => {
-                        navigate("/dashboard");
-                      }, 1500);
+                      onClickDelete(params.id);
                     }
                   });
               }}

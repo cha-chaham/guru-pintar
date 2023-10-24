@@ -36,24 +36,19 @@ export const getDetailKelas = async (kelasId) => {
 };
 
 export const updatelKelas = async (data) => {
-  const { id } = data;
   try {
-    const newData = {
-      ...data,
-    };
-    // GANTI LINK
-    const response = await axiosWithConfig.put(`/products/${id}`, newData);
+    const response = await axiosWithConfig.put(`/kelas/${data.id}`, data.data);
 
     return response.data;
   } catch (error) {
+    console.log(data.id);
     throw Error("Gagal memperbaharui kelas");
   }
 };
 
 export const deletelKelas = async (kelasId) => {
   try {
-    // GANTI LINK
-    const response = await axiosWithConfig.delete(`/products/${id}`, newData);
+    const response = await axiosWithConfig.delete(`/kelas/${kelasId}`);
 
     return response.data;
   } catch (error) {

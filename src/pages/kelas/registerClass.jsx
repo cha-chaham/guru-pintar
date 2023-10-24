@@ -26,6 +26,9 @@ export default function RegisterClass() {
       await createKelas(data);
       toast.success("Kelas Berhasil Ditambahkan");
       reset();
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
     } catch (error) {
       toast.error(error);
     }
@@ -81,6 +84,7 @@ export default function RegisterClass() {
             label="Submit"
             type="submit"
             className="bg-[#2C44BC] text-[#ECDC44] rounded-full font-bold hover:bg-[#375bd9] transition-colors ease-in mt-4 px-5 place-content-center lg:px-8"
+            disabled={isSubmitting}
           />
         </form>
       </div>
