@@ -8,6 +8,7 @@ import { studentSchema } from "@/utils/apis/kelas";
 import { toast } from "react-toastify";
 
 export default function EditMeeting() {
+  document.title = "Edit Pertemuan";
   const dummyStudentNames = [
     "Adi Nugroho",
     "Budi Santoso",

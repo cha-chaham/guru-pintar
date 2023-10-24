@@ -9,6 +9,7 @@ import { Spinner } from "@/components/loading";
 import { ButtonBack } from "@/components/button";
 
 export default function DetailMeeting() {
+  document.title = `Detail Pertemuan`;
   const [meeting, setMeeting] = useState([]);
   const [students, setStudents] = useState([]);
   const [loading, setIsLoading] = useState(false);

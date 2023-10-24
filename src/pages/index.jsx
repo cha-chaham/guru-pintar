@@ -27,7 +27,7 @@ function handleEmail(event) {
 
 export default function Index() {
   const { theme } = useTheme();
-  document.title = "Home";
+  document.title = "Beranda";
   return (
     <Layout>
       <div className="w-full bg-[#2C44BC] px-12 py-[3rem] dark:bg-base-300">

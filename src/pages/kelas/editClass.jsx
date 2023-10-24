@@ -10,6 +10,7 @@ import { Button, ButtonBack } from "@/components/button";
 import { toast } from "react-toastify";
 
 export default function EditClass() {
+  document.title = "Edit Kelas";
   const {
     reset,
     register,

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { RiArrowLeftLine } from "react-icons/ri";
 
 export default function RegisterMeeting() {
+  document.title = "Registrasi Pertemuan";
   const navigate = useNavigate();
   const dummyStudentNames = [
     "Adi Nugroho",

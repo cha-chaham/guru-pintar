@@ -31,46 +31,57 @@ export default function Router() {
     {
       path: "/",
       element: <Home />,
+      title: "Beranda",
     },
     {
       path: "/login",
       element: token !== "" ? <Navigate to="/" /> : <AuthLogin />,
+      title: "Login",
     },
     {
       path: "/register",
       element: token !== "" ? <Navigate to="/" /> : <AuthRegister />,
+      title: "Registrasi Akun",
     },
     {
       path: "/dashboard",
       element: token === "" ? <Navigate to="/" /> : <Dashboard />,
+      title: "Dashboard",
     },
     {
       path: "/register-kelas",
       element: token === "" ? <Navigate to="/" /> : <RegisterClass />,
+      title: "Registrasi Kelas",
     },
     {
       path: "/register-meeting/:idKelas",
       element: token === "" ? <Navigate to="/" /> : <RegisterMeeting />,
+      title: "Registrasi Pertemuan",
     },
     {
       path: "/edit-meeting/:idKelas/:idMeeting",
       element: token === "" ? <Navigate to="/" /> : <EditMeeting />,
+      title: "Edit Pertemuan",
     },
     {
       path: "/edit-kelas/:id",
       element: token === "" ? <Navigate to="/" /> : <EditClass />,
+      title: "Edit Kelas",
     },
     {
       path: "/kelas/students/:id",
       element: token === "" ? <Navigate to="/" /> : <Students />,
+      title: "Siswa",
     },
     {
       path: "/kelas/:id",
       element: token === "" ? <Navigate to="/" /> : <DetailClass />,
+      title: "Kelas",
     },
     {
       path: "/kelas/:idKelas/:idMeeting",
       element: token === "" ? <Navigate to="/" /> : <DetailMeeting />,
+      title: "Pertemuan",
     },
     {
       path: "*",

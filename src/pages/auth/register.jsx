@@ -10,6 +10,7 @@ import { userRegister, registerSchema } from "@/utils/apis/auth/";
 import { Link } from "react-router-dom";
 
 export default function Register() {
+  document.title = `Registrasi Akun`;
   const navigate = useNavigate();
 
   const {

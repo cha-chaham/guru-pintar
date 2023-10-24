@@ -17,6 +17,7 @@ import { getMeetinglKelas } from "@/utils/apis/meeting";
 import { Spinner } from "@/components/loading";
 
 export default function DetailClass() {
+  document.title = `Detail Kelas`;
   const navigate = useNavigate();
   const params = useParams();
   const [kelas, setKelas] = useState([]);

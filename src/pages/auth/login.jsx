@@ -10,6 +10,7 @@ import { userLogin, loginSchema } from "@/utils/apis/auth/";
 import { Link } from "react-router-dom";
 
 export default function Login() {
+  document.title = `Login Akun`;
   const { changeToken } = useToken();
 
   const {

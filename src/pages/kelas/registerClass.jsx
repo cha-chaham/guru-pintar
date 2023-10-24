@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterClass() {
+  document.title = "Registrasi Kelas";
   const navigate = useNavigate();
   const {
     reset,
