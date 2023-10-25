@@ -131,15 +131,6 @@ export default function DetailMeeting() {
                       {item}
                     </div>
                   ))}
-                  <div className="divider font-semibold">Izin</div>
-                  {dummyIzin.map((item, index) => (
-                    <div
-                      className="rounded-full px-4 bg-base-100 py-2 my-2"
-                      key={index}
-                    >
-                      {item}
-                    </div>
-                  ))}
                 </div>
               </div>
               <div id="alpa">

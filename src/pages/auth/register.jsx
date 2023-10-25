@@ -37,8 +37,12 @@ export default function Register() {
     <Layout>
       <div className="w-full h-full lg:h-screen bg-[#2C44BC] px-12 py-[3rem] dark:bg-base-300">
         <div className="bg-base-100 rounded-3xl flex h-full w-full flex-col md:flex-row xl:h-full">
-          <div className="w-1/2 bg-cover bg-gradient-to-tl from-[#2d9c71] to-[#18644a] rounded-l-3xl hidden lg:block">
-            {" "}
+          <div className="w-1/2 rounded-l-3xl hidden lg:block">
+            <img
+              src="https://picsum.photos/3600"
+              alt=""
+              className="rounded-l-3xl object-cover h-full"
+            />
           </div>
           <div className="justify-center h-full w-full py-12 px-8 md:px-10 flex items-center md:items-start flex-col ">
             <div className="font-bold text-4xl mb-5">Registrasi Akun</div>
@@ -138,9 +142,9 @@ export default function Register() {
                   aria-disabled={isSubmitting}
                 />
                 <div className="mt-3">
-                  Belum Punya Akun ?{" "}
-                  <Link to="/register" className="font-bold text-[#375bd9]">
-                    Daftar Sekarang!
+                  Sudah Punya Akun ?{" "}
+                  <Link to="/Login" className="font-bold text-[#375bd9]">
+                    Login Sekarang!
                   </Link>
                 </div>
               </div>

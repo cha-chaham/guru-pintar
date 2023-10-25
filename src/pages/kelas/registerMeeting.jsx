@@ -1,52 +1,43 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import UserLayout from "@/components/userLayout";
-import { Input } from "@/components/input";
+import { Input, Select } from "@/components/input";
 import { Button, ButtonBack } from "@/components/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { studentSchema } from "@/utils/apis/kelas";
+import { getDetailKelas } from "@/utils/apis/kelas";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { RiArrowLeftLine } from "react-icons/ri";
+import { useNavigate, useParams } from "react-router-dom";
+import { meetingSchema } from "@/utils/apis/meeting";
 
 export default function RegisterMeeting() {
   document.title = "Registrasi Pertemuan";
-  const navigate = useNavigate();
-  const dummyStudentNames = [
-    "Adi Nugroho",
-    "Budi Santoso",
-    "Citra Dewi",
-    "Dian Putra",
-    "Eka Prasetya",
-    "Fauzi Ramadhan",
-    "Gita Wulandari",
-    "Hendra Wijaya",
-    "Intan Puspita",
-    "Joko Susilo",
-    "Kartika Sari",
-    "Luki Kusuma",
-    "Mega Indah",
-    "Nina Rahmawati",
-    "Opik Pratama",
-    "Putri Amelia",
-    "Rudi Hartono",
-    "Siti Aisyah",
-    "Taufik Rahman",
-    "Wulan Sari",
-  ];
 
-  const [studentData, setStudentData] = useState(dummyStudentNames);
+  const params = useParams();
+
+  const [studentData, setStudentData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const result = await getDetailKelas(+params.idKelas);
+      setStudentData(result.kelasStudents);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
 
   const {
     reset,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm({ resolver: zodResolver(studentSchema) });
+  } = useForm({ resolver: zodResolver(meetingSchema) });
 
   function onSubmit(data) {
-    toast.success("Nama Berhasil Ditambahkan");
-    reset();
+    console.log(data);
   }
 
   return (
@@ -56,7 +47,7 @@ export default function RegisterMeeting() {
           <ButtonBack title="Registrasi Pertemuan" />
         </div>
         <div className="mt-12">
-          <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <form onSubmit={handleSubmit(() => console.log("test"))}>
             <Input
               aria-label="input-class-meetingName"
               label="Nama Materi"
@@ -77,14 +68,20 @@ export default function RegisterMeeting() {
                 Daftar Siswa
               </p>
               {/* TODO: BUAT CHECKLIST */}
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
-                {dummyStudentNames.map((item, index) => (
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
+                {studentData.map((item, index) => (
                   <div
-                    className="rounded-full px-4 py-4 bg-base-300"
+                    className="rounded-full px-8 py-4 bg-base-300 flex justify-between items-center"
                     key={index}
                   >
-                    <Input type="checkbox" name="classStudent" />
-                    <label htmlFor={`${item}`}>{`${item}`}</label>
+                    <p className="text-center font-semibold">{item}</p>
+                    <Select
+                      options={["Hadir", "Sakit/Izin", "Alpa"]}
+                      register={register}
+                      name={`presenceData.${index}.presence`}
+                      error={errors.presenceData?.[index]?.presence?.message}
+                      defaultValue="Hadir"
+                    />
                   </div>
                 ))}
               </div>
@@ -93,6 +90,7 @@ export default function RegisterMeeting() {
               label="Submit"
               type="submit"
               className="bg-[#2C44BC] text-[#ECDC44] rounded-full font-bold hover:bg-[#375bd9] transition-colors ease-in mt-4 px-5 place-content-center lg:px-8"
+              disabled={isSubmitting}
             />
           </form>
         </div>

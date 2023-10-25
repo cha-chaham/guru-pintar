@@ -46,6 +46,21 @@ export const updatelKelas = async (data) => {
   }
 };
 
+export const createStudentsKelas = async (data) => {
+  const kelasStudents = { kelasStudents: data.data };
+  console.log(data);
+  try {
+    const response = await axiosWithConfig.put(
+      `/kelas/${data.id}`,
+      kelasStudents
+    );
+    return response.data;
+  } catch (error) {
+    console.log(data.id);
+    throw Error("Gagal memperbaharui kelas");
+  }
+};
+
 export const deletelKelas = async (kelasId) => {
   try {
     const response = await axiosWithConfig.delete(`/kelas/${kelasId}`);

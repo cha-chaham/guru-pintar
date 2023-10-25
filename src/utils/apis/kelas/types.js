@@ -10,7 +10,7 @@ const kelasSchema = z.object({
 
 const studentSchema = z.object({
   id: z.number().optional(),
-  classStudent: z.string().min(1, { message: "Nama kelas harus dimasukkan" }),
+  kelasStudents: z.string().min(1, { message: "Nama kelas harus dimasukkan" }),
 });
 
 export { kelasSchema, studentSchema };
