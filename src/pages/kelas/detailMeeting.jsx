@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import UserLayout from "@/components/userLayout";
 import { toast } from "react-toastify";
-import { getDetailMeeting } from "@/utils/apis/meeting/api";
+import { getDetailMeeting } from "@/utils/apis/meeting";
 import { Spinner } from "@/components/loading";
 import { ButtonBack } from "@/components/button";
 
@@ -25,7 +25,7 @@ export default function DetailMeeting() {
       setIsLoading(true);
       const result = await getDetailMeeting(+params.idMeeting);
       setMeeting(result);
-      setStudents(result.students);
+      setStudents(result.meeting);
     } catch (error) {
       toast.error(error);
     } finally {

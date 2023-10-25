@@ -8,6 +8,7 @@ import { getDetailKelas } from "@/utils/apis/kelas";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { meetingSchema } from "@/utils/apis/meeting";
+import { createMeeting } from "@/utils/apis/meeting";
 
 export default function RegisterMeeting() {
   document.title = "Registrasi Pertemuan";
@@ -36,8 +37,28 @@ export default function RegisterMeeting() {
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(meetingSchema) });
 
-  function onSubmit(data) {
-    console.log(data);
+  async function onSubmit(data) {
+    const studentNames = studentData;
+
+    const presenceData = studentNames.map((studentName, index) => ({
+      studentName,
+      presence: data.meeting[index].presence,
+    }));
+
+    const requestData = {
+      meeting: presenceData,
+      kelasMeetingName: data.kelasMeetingName,
+      kelasMeetingDate: data.kelasMeetingDate,
+      idKelas: params.idKelas,
+    };
+
+    console.log(requestData);
+    try {
+      await createMeeting(requestData);
+      toast.success("Berhasil Menambahkan Pertemuan Baru");
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
   return (
@@ -47,20 +68,20 @@ export default function RegisterMeeting() {
           <ButtonBack title="Registrasi Pertemuan" />
         </div>
         <div className="mt-12">
-          <form onSubmit={handleSubmit(() => console.log("test"))}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               aria-label="input-class-meetingName"
               label="Nama Materi"
-              name="classMeetingName"
+              name="kelasMeetingName"
               register={register}
-              error={errors.classMeetingName?.message}
+              error={errors.kelasMeetingName?.message}
             />
             <Input
               aria-label="input-class-meetingDate"
               label="Tanggal Pembelajaran"
-              name="classMeetingDate"
+              name="kelasMeetingDate"
               register={register}
-              error={errors.classMeetingDate?.message}
+              error={errors.kelasMeetingDate?.message}
               type="date"
             />
             <div className="mt-8">
@@ -78,8 +99,8 @@ export default function RegisterMeeting() {
                     <Select
                       options={["Hadir", "Sakit/Izin", "Alpa"]}
                       register={register}
-                      name={`presenceData.${index}.presence`}
-                      error={errors.presenceData?.[index]?.presence?.message}
+                      name={`meeting.${index}.presence`}
+                      error={errors.meeting?.[index]?.presence?.message}
                       defaultValue="Hadir"
                     />
                   </div>
@@ -90,7 +111,7 @@ export default function RegisterMeeting() {
               label="Submit"
               type="submit"
               className="bg-[#2C44BC] text-[#ECDC44] rounded-full font-bold hover:bg-[#375bd9] transition-colors ease-in mt-4 px-5 place-content-center lg:px-8"
-              disabled={isSubmitting}
+              // disabled={isSubmitting}
             />
           </form>
         </div>

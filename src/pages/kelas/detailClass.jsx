@@ -150,8 +150,8 @@ export default function DetailClass() {
               {meeting.length > 0 ? (
                 meeting.map((item, index) => (
                   <MeetingCard
-                    title={item.namaMateri}
-                    description={item.kelasDate}
+                    title={item.kelasMeetingName}
+                    description={item.kelasMeetingDate}
                     key={index}
                     onClick={() => navigate(`/kelas/${params.id}/${item.id}`)}
                   />

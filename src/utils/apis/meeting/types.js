@@ -2,16 +2,16 @@ import * as z from "zod";
 
 const meetingSchema = z.object({
   id: z.number().optional(),
-  presenceData: z.array(
+  meeting: z.array(
     z.object({
-      studentName: z.string(),
-      presence: z.string(),
+      studentName: z.string().optional(),
+      presence: z.string().optional(),
     })
   ),
-  classMeetingName: z
+  kelasMeetingName: z
     .string()
     .min(1, { message: "Nama kelas harus dimasukkan" }),
-  classMeetingDate: z
+  kelasMeetingDate: z
     .string()
     .min(1, { message: "Tanggal kelas harus dimasukkan" }),
 });

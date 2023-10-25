@@ -1,4 +1,4 @@
-import { getMeetinglKelas } from "./api";
+import { getMeetinglKelas, createMeeting, getDetailMeeting } from "./api";
 import { meetingSchema } from "./types";
 
-export { getMeetinglKelas, meetingSchema };
+export { getMeetinglKelas, meetingSchema, createMeeting, getDetailMeeting };

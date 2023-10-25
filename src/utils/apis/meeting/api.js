@@ -19,3 +19,17 @@ export const getDetailMeeting = async (meetingId) => {
     throw Error("Gagal mendapatkan detail kelas") + error;
   }
 };
+
+export const createMeeting = async (data) => {
+  try {
+    const newData = {
+      ...data,
+    };
+
+    const response = await axiosWithConfig.post("/meeting", newData);
+
+    return response.data;
+  } catch (error) {
+    throw error("Gagal Membuat Kelas Baru");
+  }
+};
