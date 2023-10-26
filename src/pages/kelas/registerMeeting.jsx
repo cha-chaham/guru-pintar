@@ -14,6 +14,7 @@ export default function RegisterMeeting() {
   document.title = "Registrasi Pertemuan";
 
   const params = useParams();
+  const navigate = useNavigate();
 
   const [studentData, setStudentData] = useState([]);
 
