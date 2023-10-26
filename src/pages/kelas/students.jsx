@@ -45,8 +45,10 @@ export default function Students() {
     try {
       await createStudentsKelas({ data, id: params.id });
       fetchData();
-      toast.success("Nama Berhasil Ditambahkan");
-      reset();
+      toast.success("Nama-nama Berhasil Disimpan");
+      setTimeout(() => {
+        navigate(-1);
+      }, 1500);
     } catch (error) {
       toast.error(error.message);
     }

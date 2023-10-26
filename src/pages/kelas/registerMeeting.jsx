@@ -52,10 +52,12 @@ export default function RegisterMeeting() {
       idKelas: params.idKelas,
     };
 
-    console.log(requestData);
     try {
       await createMeeting(requestData);
       toast.success("Berhasil Menambahkan Pertemuan Baru");
+      setTimeout(() => {
+        navigate(-1);
+      }, 1500);
     } catch (error) {
       toast.error(error.message);
     }
@@ -88,7 +90,6 @@ export default function RegisterMeeting() {
               <p className="font-semibold text-xl lg:text-2xl mb-4">
                 Daftar Siswa
               </p>
-              {/* TODO: BUAT CHECKLIST */}
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
                 {studentData.map((item, index) => (
                   <div
@@ -111,7 +112,7 @@ export default function RegisterMeeting() {
               label="Submit"
               type="submit"
               className="bg-[#2C44BC] text-[#ECDC44] rounded-full font-bold hover:bg-[#375bd9] transition-colors ease-in mt-4 px-5 place-content-center lg:px-8"
-              // disabled={isSubmitting}
+              disabled={isSubmitting}
             />
           </form>
         </div>

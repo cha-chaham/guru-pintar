@@ -15,6 +15,8 @@ export default function Dashboard() {
   document.title = "Dashboard";
   const navigate = useNavigate();
 
+  const localStorageData = JSON.parse(localStorage.getItem("user"));
+  const fullName = localStorageData.fullName;
   useEffect(() => {
     fetchData();
   }, []);
@@ -36,7 +38,7 @@ export default function Dashboard() {
       <div className="w-full bg-base-100 px-5 py-12 md:px-12 md:py-24 transtion ease-in duration-300">
         <div className="w-full mb-8">
           <p className="text-xl">Selamat Datang Kembali,</p>
-          <p className="font-bold text-4xl">John Doe</p>
+          <p className="font-bold text-4xl">{fullName}</p>
         </div>
         <div className="w-full">
           <p className="font-semibold text-2xl">Daftar Kelas</p>

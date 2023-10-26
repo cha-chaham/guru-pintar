@@ -33,3 +33,29 @@ export const createMeeting = async (data) => {
     throw error("Gagal Membuat Kelas Baru");
   }
 };
+
+// Delete
+export const deleteMeeting = async (meetingId) => {
+  try {
+    const response = await axiosWithConfig.delete(`/meeting/${meetingId}`);
+
+    return response.data;
+  } catch (error) {
+    throw Error("Gagal menghapus pertemuan");
+  }
+};
+
+// Update
+export const updateMeeting = async (data) => {
+  try {
+    const response = await axiosWithConfig.put(
+      `/meeting/${data.id}`,
+      data.requestData
+    );
+
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    throw error("Gagal memperbahrui pertemuan");
+  }
+};

@@ -4,17 +4,20 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import UserLayout from "@/components/userLayout";
 import { toast } from "react-toastify";
-import { getDetailMeeting } from "@/utils/apis/meeting";
+import { getDetailMeeting, deleteMeeting } from "@/utils/apis/meeting";
 import { Spinner } from "@/components/loading";
 import { ButtonBack } from "@/components/button";
 
 export default function DetailMeeting() {
   document.title = `Detail Pertemuan`;
   const [meeting, setMeeting] = useState([]);
-  const [students, setStudents] = useState([]);
   const [loading, setIsLoading] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
+
+  const [hadirStudents, setHadirStudents] = useState([]);
+  const [sakitStudents, setSakitStudents] = useState([]);
+  const [alpaStudents, setAlpaStudents] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -25,7 +28,12 @@ export default function DetailMeeting() {
       setIsLoading(true);
       const result = await getDetailMeeting(+params.idMeeting);
       setMeeting(result);
-      setStudents(result.meeting);
+
+      getHadirStudents(result);
+      getSakitStudents(result);
+      getAlpaStudents(result);
+
+      console.log(namaSiswaHadir);
     } catch (error) {
       toast.error(error);
     } finally {
@@ -33,11 +41,50 @@ export default function DetailMeeting() {
     }
   }
 
-  const dummyAlpa = ["Taufik Rahman", "Wulan Sari"];
+  function getHadirStudents(data) {
+    // Mengambail Data Student Yang Hadir
+    const hadirStudents = data.meeting.filter(
+      (student) => student.presence === "Hadir"
+    );
+    // Mengambil Nama Yang Hadir
+    const namaSiswaHadir = hadirStudents.map((student) => student.studentName);
 
-  const dummyHadir = ["Putri Amelia", "Rudi Hartono", "Siti Aisyah"];
-  const dummySakit = ["Putri Amelia", "Rudi Hartono", "Siti Aisyah"];
-  const dummyIzin = ["Nina Rahmawati", "Opik Pratama"];
+    setHadirStudents(namaSiswaHadir);
+  }
+
+  function getSakitStudents(data) {
+    // Mengambail Data Student Yang Hadir
+    const sakitStudents = data.meeting.filter(
+      (student) => student.presence === "Sakit/Izin"
+    );
+    // Mengambil Nama Yang Sakit/Izin
+    const namaSiswaSakit = sakitStudents.map((student) => student.studentName);
+
+    setSakitStudents(namaSiswaSakit);
+  }
+
+  function getAlpaStudents(data) {
+    // Mengambail Data Student Yang Hadir
+    const alpaStudents = data.meeting.filter(
+      (student) => student.presence === "Alpa"
+    );
+    // Mengambil Nama Yang Alpa
+    const namaSiswaAlpa = alpaStudents.map((student) => student.studentName);
+
+    setAlpaStudents(namaSiswaAlpa);
+  }
+
+  async function onClickDelete() {
+    try {
+      await deleteMeeting(+params.idMeeting);
+      toast.success("Berhasil Menghapus Pertemuan");
+      setTimeout(() => {
+        navigate(-1);
+      }, 1500);
+    } catch (error) {
+      toast.error(error);
+    }
+  }
 
   return (
     <UserLayout>
@@ -59,8 +106,8 @@ export default function DetailMeeting() {
             <div id="header-title" className="flex gap-4 items-center mb-6">
               <ButtonBack />
               <div className="flex flex-col">
-                <p className="font-bold text-3xl">{meeting.namaMateri}</p>
-                <p className="text-xl mt-2">{meeting.kelasDate}</p>
+                <p className="font-bold text-3xl">{meeting.kelasMeetingName}</p>
+                <p className="text-xl mt-2">{meeting.kelasMeetingDate}</p>
               </div>
             </div>
             <div id="header-buttonAction" className="flex items-start gap-3">
@@ -76,12 +123,7 @@ export default function DetailMeeting() {
               </div>
               <div
                 className="rounded-full bg-base-300 p-2 cursor-pointer"
-                onClick={() => {
-                  toast.success("Kelas Berhasil Dihapus", { autoClose: 1000 });
-                  setTimeout(() => {
-                    navigate("/dashboard");
-                  }, 1500);
-                }}
+                onClick={onClickDelete}
               >
                 <RiDeleteBin6Line size={25} />
               </div>
@@ -109,41 +151,58 @@ export default function DetailMeeting() {
               <div id="hadir" className="h-full">
                 <p className="font-semibold text-xl mb-2">Hadir</p>
                 <div className="bg-[#1C7454] dark:bg-base-300 px-5 py-4 rounded-2xl">
-                  {students.map((item, index) => (
-                    <div
-                      className="rounded-full px-4 bg-base-100 py-2 mb-2"
-                      key={index}
-                    >
-                      {item}
+                  {hadirStudents.length > 0 ? (
+                    hadirStudents.map((item, index) => (
+                      <div
+                        className="rounded-full px-4 bg-base-100 py-2 my-2"
+                        key={index}
+                      >
+                        {item}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="divider font-bold text-white">
+                      Tidak Ada Siswa
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
               <div id="sakit-izin" className="h-full">
                 <p className="font-semibold text-xl mb-2">Sakit/Izin</p>
                 <div className="bg-[#ECDC44] dark:bg-base-300 px-5 py-5 rounded-2xl">
-                  <div className="divider font-semibold">Sakit</div>
-                  {dummySakit.map((item, index) => (
-                    <div
-                      className="rounded-full px-4 bg-base-100 py-2 my-2"
-                      key={index}
-                    >
-                      {item}
+                  {sakitStudents.length > 0 ? (
+                    sakitStudents.map((item, index) => (
+                      <div
+                        className="rounded-full px-4 bg-base-100 py-2 my-2"
+                        key={index}
+                      >
+                        {item}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="divider font-bold text-white">
+                      Tidak Ada Siswa
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
               <div id="alpa">
                 <p className="font-semibold text-xl mb-2">Alpa</p>
                 <div className="bg-[#C42414] dark:bg-base-300 px-5 py-5 rounded-2xl">
-                  {dummyAlpa.map((item, index) => (
-                    <div
-                      className="rounded-full px-4 bg-base-100 py-2 my-2"
-                      key={index}
-                    >
-                      {item}
+                  {alpaStudents.length > 0 ? (
+                    alpaStudents.map((item, index) => (
+                      <div
+                        className="rounded-full px-4 bg-base-100 py-2 my-2"
+                        key={index}
+                      >
+                        {item}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="divider font-bold text-white">
+                      Tidak Ada Siswa
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>

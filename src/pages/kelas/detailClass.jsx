@@ -50,7 +50,7 @@ export default function DetailClass() {
         navigate("/dashboard");
       }, 1500);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error);
     }
   }
 
@@ -60,7 +60,7 @@ export default function DetailClass() {
       const result = await getDetailKelas(+params.id);
       setKelas(result);
     } catch (error) {
-      toast.error(error.message, { autoClose: 1000, hideProgressBar: false });
+      toast.error(error, { autoClose: 1000, hideProgressBar: false });
     } finally {
       setIsLoading(false);
     }

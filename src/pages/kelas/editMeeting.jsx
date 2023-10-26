@@ -1,47 +1,72 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import UserLayout from "@/components/userLayout";
-import { Input } from "@/components/input";
+import { Input, Select } from "@/components/input";
 import { Button, ButtonBack } from "@/components/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { studentSchema } from "@/utils/apis/kelas";
 import { toast } from "react-toastify";
+import {
+  getDetailMeeting,
+  meetingSchema,
+  updateMeeting,
+} from "@/utils/apis/meeting";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditMeeting() {
   document.title = "Edit Pertemuan";
-  const dummyStudentNames = [
-    "Adi Nugroho",
-    "Budi Santoso",
-    "Citra Dewi",
-    "Dian Putra",
-    "Eka Prasetya",
-    "Fauzi Ramadhan",
-    "Gita Wulandari",
-    "Hendra Wijaya",
-    "Intan Puspita",
-    "Joko Susilo",
-    "Kartika Sari",
-    "Luki Kusuma",
-    "Mega Indah",
-    "Nina Rahmawati",
-    "Opik Pratama",
-    "Putri Amelia",
-    "Rudi Hartono",
-    "Siti Aisyah",
-    "Taufik Rahman",
-    "Wulan Sari",
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [studentData, setStudentData] = useState([]);
+  const params = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      setIsLoading(true);
+      const result = await getDetailMeeting(+params.idMeeting);
+      setStudentData(result.meeting);
+      setValue("kelasMeetingName", result.kelasMeetingName);
+      setValue("kelasMeetingDate", result.kelasMeetingDate);
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const {
-    reset,
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
-  } = useForm({ resolver: zodResolver(studentSchema) });
+  } = useForm({ resolver: zodResolver(meetingSchema) });
 
-  function onSubmit(data) {
-    toast.success("Nama Berhasil Ditambahkan");
-    reset();
+  async function onSubmit(data) {
+    const studentNames = studentData;
+    const presenceData = studentNames.map((studentName, index) => ({
+      studentName: studentName.studentName,
+      presence: data.meeting[index].presence,
+    }));
+
+    const requestData = {
+      meeting: presenceData,
+      kelasMeetingName: data.kelasMeetingName,
+      kelasMeetingDate: data.kelasMeetingDate,
+      idKelas: params.idKelas,
+    };
+
+    try {
+      await updateMeeting({ requestData, id: params.idMeeting });
+      toast.success("Kelas Berhasil Diperbaharui");
+      setTimeout(() => {
+        navigate(-1);
+      }, 1500);
+    } catch (error) {
+      toast.error(error);
+    }
   }
 
   return (
@@ -51,35 +76,45 @@ export default function EditMeeting() {
           <ButtonBack title="Edit Pertemuan" />
         </div>
         <div className="mt-12">
-          <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Input
-              aria-label="input-class-meetingName"
+              aria-label="input-kelas-meetingName"
               label="Nama Materi"
-              name="classMeetingName"
+              name="kelasMeetingName"
               register={register}
-              error={errors.classMeetingName?.message}
+              error={errors.kelasMeetingName?.message}
+              disabled={isLoading}
             />
             <Input
-              aria-label="input-class-meetingDate"
+              aria-label="input-kelas-meetingDate"
               label="Tanggal Pembelajaran"
-              name="classMeetingDate"
+              name="kelasMeetingDate"
               register={register}
-              error={errors.classMeetingDate?.message}
+              error={errors.kelasMeetingDate?.message}
               type="date"
+              disabled={isLoading}
             />
             <div className="mt-8">
               <p className="font-semibold text-xl lg:text-2xl mb-4">
                 Daftar Siswa
               </p>
-              {/* TODO: BUAT CHECKLIST */}
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
-                {dummyStudentNames.map((item, index) => (
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
+                {studentData.map((item, index) => (
                   <div
-                    className="rounded-full px-4 py-4 bg-base-300"
+                    className="rounded-full px-8 py-4 bg-base-300 flex justify-between items-center"
                     key={index}
                   >
-                    <Input type="checkbox" name="classStudent" />
-                    <label htmlFor={`${item}`}>{`${item}`}</label>
+                    <p className="text-center font-semibold">
+                      {item.studentName}
+                    </p>
+                    <Select
+                      options={["Hadir", "Sakit/Izin", "Alpa"]}
+                      register={register}
+                      name={`meeting.${index}.presence`}
+                      error={errors.meeting?.[index]?.presence?.message}
+                      defaultValue={item.presence}
+                      disabled={isLoading}
+                    />
                   </div>
                 ))}
               </div>
@@ -88,6 +123,7 @@ export default function EditMeeting() {
               label="Submit"
               type="submit"
               className="bg-[#2C44BC] text-[#ECDC44] rounded-full font-bold hover:bg-[#375bd9] transition-colors ease-in mt-4 px-5 place-content-center lg:px-8"
+              disabled={isSubmitting || isLoading}
             />
           </form>
         </div>

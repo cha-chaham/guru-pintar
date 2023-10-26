@@ -1,13 +1,17 @@
 export const userLogin = async (data) => {
   return new Promise((resolve, reject) => {
-    const dummyUser = { username: "admin", password: "password123" };
+    const dummyUser = {
+      username: "admin",
+      password: "password123",
+      fullName: "Charlie Christian Hamdani",
+    };
 
     setTimeout(() => {
       if (
         data.username === dummyUser.username &&
         data.password === dummyUser.password
       ) {
-        resolve({ message: "Login Success", payload: data });
+        resolve({ message: "Login Success", payload: dummyUser });
       } else if (
         data.username === dummyUser.username &&
         data.password !== dummyUser.password
