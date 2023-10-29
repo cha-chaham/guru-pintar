@@ -9,6 +9,7 @@ import { IconContext } from "react-icons";
 import { Spinner } from "@/components/loading";
 
 const APIkey = process.env.VITE_OPENAI_API_KEY;
+console.log(APIkey);
 const openai = new OpenAI({
   apiKey: APIkey,
   dangerouslyAllowBrowser: true,
