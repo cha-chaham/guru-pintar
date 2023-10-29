@@ -25,7 +25,7 @@ export default function Router() {
   const { token } = useToken();
 
   useEffect(() => {
-    setAxiosConfig("", process.env.VITE_BASE_URL);
+    setAxiosConfig("", import.meta.env.VITE_BASE_URL);
   }, []);
 
   const router = createBrowserRouter([
