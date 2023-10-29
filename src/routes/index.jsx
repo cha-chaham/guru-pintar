@@ -19,6 +19,7 @@ import EditClass from "@/pages/kelas/editClass";
 import RegisterMeeting from "@/pages/kelas/registerMeeting";
 import DetailMeeting from "@/pages/kelas/detailMeeting";
 import EditMeeting from "@/pages/kelas/editMeeting";
+import KreatifBelajar from "@/pages/kreatifBelajar";
 
 export default function Router() {
   const { token } = useToken();
@@ -81,6 +82,11 @@ export default function Router() {
     {
       path: "/kelas/:idKelas/:idMeeting",
       element: token === "" ? <Navigate to="/" /> : <DetailMeeting />,
+      title: "Pertemuan",
+    },
+    {
+      path: "/kreatif-belajar",
+      element: token === "" ? <Navigate to="/" /> : <KreatifBelajar />,
       title: "Pertemuan",
     },
     {
