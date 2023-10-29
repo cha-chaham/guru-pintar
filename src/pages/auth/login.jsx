@@ -7,11 +7,12 @@ import Layout from "@/components/layout";
 import { Button } from "@/components/button";
 import { useToken } from "@/utils/contexts/token";
 import { userLogin, loginSchema } from "@/utils/apis/auth/";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   document.title = `Login Akun`;
   const { changeToken } = useToken();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -24,6 +25,7 @@ export default function Login() {
   async function handleLogin(data) {
     try {
       const result = await userLogin(data);
+      navigate("/dashboard");
       toast.success("Successfully login");
       changeToken(JSON.stringify(result.payload));
     } catch (error) {

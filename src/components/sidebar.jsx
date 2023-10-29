@@ -28,7 +28,6 @@ export default function SidebarDashboard({ children }) {
   }
 
   function handleLogout() {
-    changeToken();
     toast.success(
       "Proses Keluar Berhasil, Anda akan otomatis dialihkan ke halaman utama",
       {
@@ -37,6 +36,7 @@ export default function SidebarDashboard({ children }) {
       }
     );
     setTimeout(() => {
+      changeToken();
       window.location.href = "/";
     }, 3000);
   }
