@@ -7,11 +7,11 @@ import { ThemeProvider } from "./utils/contexts/theme";
 import { TokenProvider } from "./utils/contexts/token";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ThemeProvider>
-      <TokenProvider>
-        <App />
-      </TokenProvider>
-    </ThemeProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ThemeProvider>
+    <TokenProvider>
+      <App />
+    </TokenProvider>
+  </ThemeProvider>
+  // </React.StrictMode>
 );

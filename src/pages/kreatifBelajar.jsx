@@ -117,8 +117,14 @@ export default function KreatifBelajar() {
               >
                 {result.message.role}
               </div>
-              <p className="chat-bubble" key={result.message.content}>
-                {result.message.content}
+              <p
+                className="chat-bubble"
+                key={result.message.content}
+                dangerouslySetInnerHTML={{
+                  __html: result.message.content.replace(/\n/g, "<br />"),
+                }}
+              >
+                {/* {result.message.content} */}
               </p>
             </div>
           ))}
