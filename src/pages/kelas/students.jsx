@@ -7,11 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { studentSchema } from "@/utils/apis/kelas";
 import { toast } from "react-toastify";
 import { createStudentsKelas, getDetailKelas } from "@/utils/apis/kelas";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Students() {
   document.title = "Siswa";
   const params = useParams();
+  const navigate = useNavigate();
 
   const [studentData, setStudentData] = useState([]);
 

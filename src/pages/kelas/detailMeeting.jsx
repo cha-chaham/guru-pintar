@@ -32,8 +32,6 @@ export default function DetailMeeting() {
       getHadirStudents(result);
       getSakitStudents(result);
       getAlpaStudents(result);
-
-      console.log(namaSiswaHadir);
     } catch (error) {
       toast.error(error);
     } finally {
