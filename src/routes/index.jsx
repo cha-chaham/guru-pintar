@@ -16,9 +16,9 @@ import DetailClass from "@/pages/kelas/detailClass";
 import RegisterClass from "@/pages/kelas/registerClass";
 import Students from "@/pages/kelas/students";
 import EditClass from "@/pages/kelas/editClass";
-import RegisterMeeting from "@/pages/kelas/registerMeeting";
-import DetailMeeting from "@/pages/kelas/detailMeeting";
-import EditMeeting from "@/pages/kelas/editMeeting";
+import RegisterMeeting from "@/pages/meeting/registerMeeting";
+import DetailMeeting from "@/pages/meeting/detailMeeting";
+import EditMeeting from "@/pages/meeting/editMeeting";
 import KreatifBelajar from "@/pages/kreatifBelajar";
 
 export default function Router() {

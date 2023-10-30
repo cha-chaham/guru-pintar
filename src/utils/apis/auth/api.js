@@ -1,7 +1,7 @@
 export const userLogin = async (data) => {
   return new Promise((resolve, reject) => {
     const dummyUser = {
-      username: "admin",
+      username: "guru-pintar2023",
       password: "password123",
       fullName: "Charlie Christian Hamdani",
     };
