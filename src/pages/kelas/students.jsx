@@ -8,6 +8,7 @@ import { studentSchema } from "@/utils/apis/kelas";
 import { toast } from "react-toastify";
 import { createStudentsKelas, getDetailKelas } from "@/utils/apis/kelas";
 import { useNavigate, useParams } from "react-router-dom";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 export default function Students() {
   document.title = "Siswa";
@@ -55,6 +56,12 @@ export default function Students() {
     }
   }
 
+  function deleteStudent(index) {
+    const updatedStudentData = [...studentData];
+    updatedStudentData.splice(index, 1);
+    setStudentData(updatedStudentData);
+  }
+
   return (
     <UserLayout>
       <div className="w-full bg-base-100 px-5 py-12 md:px-12 md:py-24 transtion ease-in duration-300">
@@ -91,8 +98,14 @@ export default function Students() {
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {studentData.length > 0 ? (
               studentData.map((item, index) => (
-                <div className="rounded-full px-4 py-4 bg-base-300" key={index}>
+                <div
+                  className="rounded-full px-6 py-4 bg-base-300 flex justify-between items-center font-semibold"
+                  key={index}
+                >
                   {item}
+                  <button onClick={() => deleteStudent(index)}>
+                    <RiDeleteBin6Line />
+                  </button>
                 </div>
               ))
             ) : (
