@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { getDetailMeeting, deleteMeeting } from "@/utils/apis/meeting";
 import { Spinner } from "@/components/loading";
 import { ButtonBack } from "@/components/button";
+import swal from "@/utils/apis/swal";
 
 export default function DetailMeeting() {
   document.title = `Detail Pertemuan`;
@@ -121,7 +122,15 @@ export default function DetailMeeting() {
               </div>
               <div
                 className="rounded-full bg-base-300 p-2 cursor-pointer"
-                onClick={onClickDelete}
+                onClick={() => {
+                  swal
+                    .fire({ title: "Apakah Anda Yakin ?", icon: "warning" })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        onClickDelete(params.id);
+                      }
+                    });
+                }}
               >
                 <RiDeleteBin6Line size={25} />
               </div>
