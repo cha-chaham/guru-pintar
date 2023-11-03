@@ -50,7 +50,7 @@ export default function SidebarDashboard({ children }) {
       )}
       <Sidebar
         className="overflow-y-hidden h-full fixed left-0"
-        backgroundColor="#F4ECDC"
+        backgroundColor={theme == "light" ? "#F4ECDC" : "#1d232a"}
         toggled={collapsed}
         breakPoint="sm"
         onBreakPoint={setBroken}
@@ -58,11 +58,23 @@ export default function SidebarDashboard({ children }) {
         onBackdropClick={() => handleCollapse()}
       >
         <div className="justify-center flex py-8 px-4 items-center ">
-          <img src="/logo/light/HorizontalLayout.png" alt="" className="w-42" />
+          {theme == "light" ? (
+            <img
+              src="/logo/light/HorizontalLayout.png"
+              alt=""
+              className="w-42"
+            />
+          ) : (
+            <img
+              src="/logo/dark/HorizontalLayout-dark.png"
+              alt=""
+              className="w-42"
+            />
+          )}
         </div>
         <div className="divider m-0"></div>
 
-        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-[#2C44BC]">
+        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-white">
           <MenuItem
             onClick={() => changeTheme()}
             icon={
@@ -77,24 +89,24 @@ export default function SidebarDashboard({ children }) {
           </MenuItem>
         </Menu>
         <div className="divider m-0"></div>
-        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-[#2C44BC]">
+        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-white">
           <Link to="/dashboard">
             <MenuItem icon={<RiDashboardFill />}>Dashboard</MenuItem>
           </Link>
         </Menu>
-        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-[#2C44BC]">
+        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-white">
           <Link to="/register-kelas">
             <MenuItem icon={<RiFileAddFill />}>Tambah Kelas</MenuItem>
           </Link>
         </Menu>
-        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-[#2C44BC]">
+        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-white">
           <Link to="/kreatif-belajar">
             <MenuItem icon={<RiBubbleChartFill />}>Kreatif Belajar</MenuItem>
           </Link>
         </Menu>
         <div className="divider m-0"></div>
 
-        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-[#2C44BC] bottom-0">
+        <Menu className="hover:text-[#2C44BC] dark:hover:text-[#2C44BC] text-[#2C44BC] dark:text-white bottom-0">
           <MenuItem icon={<RiLogoutBoxRLine />} onClick={handleLogout}>
             Keluar Akun
           </MenuItem>

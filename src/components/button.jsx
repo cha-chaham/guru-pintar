@@ -16,12 +16,12 @@ function ButtonBack(props) {
   const { title } = props;
   return (
     <div className="flex gap-4 items-center mb-6">
-      <div
+      <button
         className="rounded-full bg-base-300 p-2 cursor-pointer"
         onClick={() => navigate(-1)}
       >
         <RiArrowLeftLine size={25} />
-      </div>
+      </button>
       <p className="font-bold text-3xl">{title}</p>
     </div>
   );

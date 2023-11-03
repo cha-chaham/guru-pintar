@@ -8,7 +8,8 @@ import { studentSchema } from "@/utils/apis/kelas";
 import { toast } from "react-toastify";
 import { createStudentsKelas, getDetailKelas } from "@/utils/apis/kelas";
 import { useNavigate, useParams } from "react-router-dom";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiDeleteBin6Line, RiArrowLeftLine } from "react-icons/ri";
+import swal from "@/utils/apis/swal";
 
 export default function Students() {
   document.title = "Siswa";
@@ -62,11 +63,33 @@ export default function Students() {
     setStudentData(updatedStudentData);
   }
 
+  function backButton() {
+    swal
+      .fire({
+        title: "Sudahkah anda menyimpan daftar siswa anda ?",
+        icon: "danger",
+        showConfirmButton: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          onSaveData(studentData);
+        }
+      });
+  }
+
   return (
     <UserLayout>
       <div className="w-full bg-base-100 px-5 py-12 md:px-12 md:py-24 transtion ease-in duration-300">
         <div className="flex gap-4 items-center justify-between mb-6">
-          <ButtonBack title="Siswa" />
+          <div className="flex gap-4 items-center mb-6">
+            <button
+              className="rounded-full bg-base-300 p-2 cursor-pointer"
+              onClick={backButton}
+            >
+              <RiArrowLeftLine size={25} />
+            </button>
+            <p className="font-bold text-3xl">Siswa</p>
+          </div>
           <Button
             label="Simpan Daftar Murid"
             type="submit"

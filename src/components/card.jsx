@@ -82,7 +82,7 @@ function MeetingCard(props) {
   const { title, description, onClick } = props;
   return (
     <div
-      className="w-full px-8 py-4 bg-[#F4ECDC] rounded-xl mb-4 cursor-pointer"
+      className="w-full px-8 py-4 bg-[#F4ECDC] rounded-xl mb-4 cursor-pointer dark:bg-base-200"
       onClick={onClick}
     >
       <p className="font-bold text-2xl text-[#2C44BC]">{title}</p>
